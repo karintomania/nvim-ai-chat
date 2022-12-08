@@ -28,13 +28,14 @@ local formattedQA = apiClient.formatQA('test question', 'test answer')
 assert(formattedQA == 'Q: test question\nA: test answer\n')
 
 -- test makeCurlCommand
-local curlCommand = apiClient.makeCurlCommand('test question', {token = 'token', maxLength = '100'})
+local curlCommand = apiClient.makeCurlCommand('test question',
+	{token = 'token', maxLength = '100', temperature = 0.5})
 assert(
 	curlCommand == [[
 curl https://api.openai.com/v1/completions -s \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer token" \
--d '{ "model": "text-davinci-003", "prompt": "test question", "temperature": 0, "max_tokens": 100}'
+-d '{ "model": "text-davinci-003", "prompt": "test question", "temperature": 0.5, "max_tokens": 100}'
 ]])
 
 -- test call

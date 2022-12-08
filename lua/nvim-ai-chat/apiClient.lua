@@ -1,4 +1,5 @@
 local client = {}
+
 function client.call(question, config)
 
 	local json = client.curl(question, config)
@@ -39,13 +40,14 @@ function client.makeCurlCommand(question, config)
 
 	local token = config.token
 	local maxLength = config.maxLength
+	local temperature = config.temperature
 
 	local cmd = string.format([[
 curl https://api.openai.com/v1/completions -s \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer %s" \
--d '{ "model": "text-davinci-003", "prompt": "%s", "temperature": 0, "max_tokens": %s}'
-]], token, question, maxLength)
+-d '{ "model": "text-davinci-003", "prompt": "%s", "temperature": %s, "max_tokens": %s}'
+]], token, question, temperature, maxLength)
 	return cmd;
 
 end

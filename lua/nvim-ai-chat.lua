@@ -6,7 +6,8 @@ local apiClient = require('nvim-ai-chat/apiClient')
 M.config = {
 	token = '',
 	resultType = 'tab',
-	maxLength = 300
+	maxLength = 300,
+	temperature = 0.1
 }
 
 function M.setup(customConfig)
