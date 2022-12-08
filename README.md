@@ -1,6 +1,8 @@
 # NeoVim AI Chat
 NeoVim plugin to talk to open ai api (https://api.openai.com/v1/completions) from NeoVim.
 
+![preview of neovim-ai-chat](https://raw.githubusercontent.com/karintomania/nvim-ai-chat/main/images/demo.gif)
+
 ## Getting Started
 install the plugin with Plug
 ```
