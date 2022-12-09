@@ -1,5 +1,7 @@
 local client = {}
 
+local strUtil = require('nvim-ai-chat/strUtil')
+
 function client.call(question, config)
 
 	local json = client.curl(question, config)
@@ -14,7 +16,9 @@ function client.call(question, config)
 end
 
 function client.curl(question, config)
-	local cmd = client.makeCurlCommand(question, config)
+	local escapedQuestion = strUtil.escape(question)
+
+	local cmd = client.makeCurlCommand(escapedQuestion, config)
 
     local handle = assert(io.popen(cmd, 'r'))
     local output = assert(handle:read('*a'))
@@ -53,9 +57,8 @@ curl https://api.openai.com/v1/completions -s \
 end
 
 function client.getAnswerFromJson(json)
-	_, _, text = string.find(json, "\"text\":\"\\n\\n(.-)\",\"index")
-	return text;
-
+	local _, _, text = string.find(json, "\"text\":\"\\n\\n(.-)\",\"index")
+	return strUtil.unescape(text)
 end
 
 function client.formatQA(question, answer)

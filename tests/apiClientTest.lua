@@ -2,13 +2,12 @@ package.loaded['lua/nvim-ai-chat/apiClient'] = nil
 local apiClient = require('lua/nvim-ai-chat/apiClient')
 
 
--- test getAnswerFromJson
-local answer = apiClient.getAnswerFromJson([[{"choices":[{"text":"\n\nThis is a test","index":0,"logprobs":null,"finish_reason":"length"}]])
-assert(answer == "This is a test")
+-- test getAnswerFromJson remove \\n at the beginning and apply strUtil.unescape
+local answer = apiClient.getAnswerFromJson([[{"text":"\n\nThis is a test\nThis is a second line","index":0}]])
+assert(answer == "This is a test\nThis is a second line")
 
 -- test validate error json
 local result, message = apiClient.validateJson([[{"choices":[{"text":"\n\nThis is a test","index":0,"logprobs":null,"finish_reason":"length"}]])
-assert(result)
 assert(message == "")
 
 result, message = apiClient.validateJson([[
@@ -37,12 +36,5 @@ curl https://api.openai.com/v1/completions -s \
 -H "Authorization: Bearer token" \
 -d '{ "model": "text-davinci-003", "prompt": "test question", "temperature": 0.5, "max_tokens": 100}'
 ]])
-
--- test call
--- local result = apiClient.call(
--- 	'what is a good programming language for web?',
--- 	{token = '', maxLength = '200'})
--- print(result)
-
 
 print('success!')
