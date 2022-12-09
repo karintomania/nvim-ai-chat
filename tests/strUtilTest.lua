@@ -14,6 +14,10 @@ local result = strUtil.unescape([[test\ntest]])
 assert(result == [[test
 test]])
 
+-- unescape() replaces \t
+local result = strUtil.unescape([[test\ttest]])
+assert(result == [[test	test]])
+
 
 -- escape() escapes '
 -- ' is replaced to '\'' for curl command: https://stackoverflow.com/questions/32122586/curl-escape-single-quote

@@ -12,6 +12,7 @@ function strUtil.unescape(text)
 	text = string.gsub(text, '\\n', '\n')
 	text = string.gsub(text, [[\']], [[']])
 	text = string.gsub(text, [[\"]], [["]])
+	text = string.gsub(text, [[\t]], [[	]])
 	return text
 end
 
