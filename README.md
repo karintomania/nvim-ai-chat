@@ -16,8 +16,10 @@ You need an api token for OpenAI.
 lua << EOF
 require("nvim-ai-chat").setup({
 	token = '<YOUR API TOKEN>', -- access token of open ai
-	maxLength = 500, -- maximum length of the answer, default 300
-	temperature = 0 -- sampling temperature, default 0.1
+	maxLength = 500, -- maximum length of the answer. default 300
+	temperature = 0, -- sampling temperature. default 0.1
+	display = 'window', -- where to open the chat result. default 'tab'
+	                    -- available options for display is 'tab' or 'window'
 })
 EOF
 
