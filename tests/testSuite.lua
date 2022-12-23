@@ -20,6 +20,8 @@ require('tests/api/curlJsonResponseTest')
 ----------------
 -- Display tests
 ----------------
+package.loaded['tests/display/resultBufferTest'] = nil
+require('tests/display/resultBufferTest')
 package.loaded['tests/resultPrinterTest'] = nil
 require('tests/resultPrinterTest')
 

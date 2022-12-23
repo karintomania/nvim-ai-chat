@@ -12,6 +12,7 @@ local config = {
 	token = secret,
 }
 
+-- test init make a curl command
 curl.init(question, config)
 
 vim.fn.assert_equal(
@@ -23,8 +24,9 @@ string.format([[curl https://api.openai.com/v1/completions -s \
 curl.command
 )
 
+-- test curl command returns result
 local answer = curl
-	.init("Is writing unit tests good?", config)
+	.init("Give me a quote about unit tests.", config)
 	.call()
 
 print(answer)
