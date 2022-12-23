@@ -1,7 +1,8 @@
 local M = {}
 
 local resultPrinter = require('nvim-ai-chat/resultPrinter')
-local apiClient = require('nvim-ai-chat/apiClient')
+local api = require('nvim-ai-chat/api/api')
+local client = require('nvim-ai-chat/api/curlClient')
 
 M.config = {
 	token = '',
@@ -15,9 +16,9 @@ function M.setup(customConfig)
 	M.config = filled
 end
 
-function M.chat(string)
-	local result = apiClient.call(string, M.config)
-	resultPrinter.print(result)
+function M.chat(question)
+	local answer = api.call(question, client, M.config)
+	resultPrinter.print(question, answer)
 end
 
 return M

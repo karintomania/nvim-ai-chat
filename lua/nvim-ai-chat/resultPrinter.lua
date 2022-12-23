@@ -35,13 +35,20 @@ function printTab(buffName, str)
 	appendBuffer(handle, str)
 
 	vim.cmd('tab drop ' .. buffName)
+	-- move cursor to the end
+	vim.api.nvim_command('normal! G')
 end
 
-function resultPrinter.print(str)
+function resultPrinter.print(question, answer)
+	local str = formatQA(question, answer)
 	local buffName = 'Chat_Result'
 
 	-- might add other method like printWindow
 	printTab(buffName, str)
+end
+
+function formatQA(question, answer)
+	return 'Q: ' .. question .. '\nA: ' .. answer .. '\n'
 end
 
 return resultPrinter
