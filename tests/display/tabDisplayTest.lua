@@ -6,4 +6,8 @@ local resultBuffer = require('lua/nvim-ai-chat/display/resultBuffer')
 
 local handle = resultBuffer.create('test question' ,"test result\nsecond line")
 
-tabDisplay.display(buffer)
+tabDisplay.display(handle)
+
+
+
+require('lua/nvim-ai-chat/util').test('tabDisplayTest')

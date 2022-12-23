@@ -1,5 +1,6 @@
-
+----------------
 -- feature test
+----------------
 -- package.loaded['tests/featureTest'] = nil
 -- require('tests/featureTest')
 
@@ -22,8 +23,12 @@ require('tests/api/curlJsonResponseTest')
 ----------------
 package.loaded['tests/display/resultBufferTest'] = nil
 require('tests/display/resultBufferTest')
-package.loaded['tests/resultPrinterTest'] = nil
-require('tests/resultPrinterTest')
+
+-- these are skipped as it requires manual checks
+-- package.loaded['tests/display/tabDisplayTest'] = nil
+-- require('tests/display/tabDisplayTest')
+-- package.loaded['tests/display/windowDisplayTest'] = nil
+-- require('tests/display/windowDisplayTest')
 
 ----------------
 -- Util tests
