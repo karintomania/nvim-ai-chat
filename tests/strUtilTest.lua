@@ -28,4 +28,10 @@ vim.fn.assert_equal(result, [['\''test'\'']])
 local result = strUtil.escape([["test"]])
 vim.fn.assert_equal(result, [[\"test\"]])
 
+-- escape() escapes new line
+local result = strUtil.escape([[test
+second line]])
+print(result)
+vim.fn.assert_equal(result, [[test\nsecond line]])
+
 require('lua/nvim-ai-chat/util').test('strUtilTest')
