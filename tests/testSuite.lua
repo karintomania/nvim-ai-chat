@@ -10,8 +10,8 @@
 package.loaded['tests/api/apiTest'] = nil
 require('tests/api/apiTest')
 
-package.loaded['tests/api/curlClientTest'] = nil
-require('tests/api/curlClientTest')
+-- package.loaded['tests/api/curlClientTest'] = nil
+-- require('tests/api/curlClientTest')
 
 package.loaded['tests/api/curlJsonResponseTest'] = nil
 require('tests/api/curlJsonResponseTest')

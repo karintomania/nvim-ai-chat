@@ -14,20 +14,18 @@ local errorJson = [[
 local status, err = pcall(curlJsonResponse.init, errorJson)
 
 vim.fn.assert_false(status)
-vim.fn.assert_notequal(-1, string.find(err, 'Incorrect API key provided'))
+vim.fn.assert_notequal(nil, string.find(err, 'invalid_api_key'))
 
-
--- test getAnswer gets answer from json
-local validJson = [[{"text":"test\n\nThis is a test\nThis is a second line","index":0}]]
-local answer = curlJsonResponse.init(validJson).getAnswer()
-
-vim.fn.assert_equal([[test
-
-This is a test
-This is a second line]],answer)
-
--- test getAnswer removes new line at the beginning
-local validJson = [[{"text":"\n\nThis is a test\n\nThis is a second line","index":0}]]
+-- test getAnswer gets text as answer and removes new line at the beginning
+-- local validJson = [[{"text":"\n\nThis is a test\n\nThis is a second line","index":0}]]
+local validJson = [[{
+  "choices": [
+    {
+      "text": "\n\nThis is a test\n\nThis is a second line",
+      "index": 0,
+    }
+  ],
+}]]
 local answer = curlJsonResponse.init(validJson).getAnswer()
 
 vim.fn.assert_equal([[This is a test
