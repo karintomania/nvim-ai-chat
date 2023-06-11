@@ -8,6 +8,7 @@ local escapedQuestion = [[test question \"test\"]]
 
 local config = {
 	temperature = 0.5,
+	model = 'text-ada-001',
 	maxLength = 100,
 	token = secret,
 }
@@ -19,7 +20,7 @@ vim.fn.assert_equal(
 string.format([[curl https://api.openai.com/v1/completions -s \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer %s" \
--d '{ "model": "text-davinci-003", "prompt": "%s", "temperature": %s, "max_tokens": %s}'
+-d '{ "model": "text-ada-001", "prompt": "%s", "temperature": %s, "max_tokens": %s}'
 ]], config.token, escapedQuestion, config.temperature, config.maxLength),
 curl.command
 )

@@ -1,6 +1,7 @@
 package.loaded['lua/nvim-ai-chat'] = nil
 local plugin = require('lua/nvim-ai-chat')
 
+package.loaded['lua/nvim-ai-chat/api/api'] = nil
 package.loaded['lua/nvim-ai-chat/api/curlClient'] = nil
 package.loaded['lua/nvim-ai-chat/api/curlJsonResponse'] = nil
 local client = require('lua/nvim-ai-chat/api/curlClient')

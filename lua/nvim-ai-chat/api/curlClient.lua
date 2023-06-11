@@ -9,14 +9,15 @@ function curlUtil.init(question, config)
 	question = strUtil.escape(question)
 
 	local token = config.token
+	local model = config.model
 	local maxLength = config.maxLength
 	local temperature = config.temperature
 
 	curlUtil.command = string.format([[curl https://api.openai.com/v1/completions -s \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer %s" \
--d '{ "model": "text-ada-001", "prompt": "%s", "temperature": %s, "max_tokens": %s}'
-]], token, question, temperature, maxLength)
+-d '{ "model": "%s", "prompt": "%s", "temperature": %s, "max_tokens": %s}'
+]], token, model, question, temperature, maxLength)
 
 	return curlUtil
 end

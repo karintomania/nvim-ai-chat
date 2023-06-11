@@ -7,6 +7,7 @@ local resultBuffer = require('nvim-ai-chat/display/resultBuffer')
 
 M.config = {
 	token = '',
+	model = 'text-curie-001',
 	display = 'tab',
 	maxLength = 300,
 	temperature = 0.1

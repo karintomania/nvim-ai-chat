@@ -9,10 +9,9 @@ function curlJsonResponse.init(json)
 	local index = string.find(json, "\"error\":")
 
 	if index ~= nil then 
-		local _, _, errorMessage = string.find(json, "\"code\": \"(.-)\"")
-        error(errorMessage)
+		-- local _, _, errorMessage = string.find(json, "\"code\": \"(.-)\"")
+        error(json)
 	end
-
 
 	curlJsonResponse.json = json
 

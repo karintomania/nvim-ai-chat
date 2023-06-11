@@ -28,4 +28,4 @@ vim.fn.assert_equal(result, [['\''test'\'']])
 local result = strUtil.escape([["test"]])
 vim.fn.assert_equal(result, [[\"test\"]])
 
-require('lua/nvim-ai-chat/util').test('resultBufferTest')
+require('lua/nvim-ai-chat/util').test('strUtilTest')
