@@ -21,15 +21,19 @@ vim.fn.assert_true(1 < string.find(err, errorJson))
 local validJson = [[{
   "choices": [
     {
-      "text": "\n\nThis is a test\n\nThis is a second line",
-      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "This is a test message from the AI language model GPT-3
+As an AI language model, I am designed to understand and generate human-like language and respond to various prompts and queries."
+      },
+      "finish_reason": "stop",
+      "index": 0
     }
-  ],
+  ]
 }]]
 local answer = curlJsonResponse.init(validJson).getAnswer()
 
-vim.fn.assert_equal([[This is a test
-
-This is a second line]],answer)
+vim.fn.assert_equal([[This is a test message from the AI language model GPT-3
+As an AI language model, I am designed to understand and generate human-like language and respond to various prompts and queries.]],answer)
 
 require('lua/nvim-ai-chat/util').test('curlJsonResponseTest')

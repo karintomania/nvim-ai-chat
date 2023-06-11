@@ -10,14 +10,12 @@ function curlUtil.init(question, config)
 
 	local token = config.token
 	local model = config.model
-	local maxLength = config.maxLength
-	local temperature = config.temperature
 
-	curlUtil.command = string.format([[curl https://api.openai.com/v1/completions -s \
+	curlUtil.command = string.format([[curl https://api.openai.com/v1/chat/completions -s \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer %s" \
--d '{ "model": "%s", "prompt": "%s", "temperature": %s, "max_tokens": %s}'
-]], token, model, question, temperature, maxLength)
+-d '{ "model": "%s", "messages": [{"role": "user", "content": "%s"}]}'
+]], token, model, question)
 
 	return curlUtil
 end

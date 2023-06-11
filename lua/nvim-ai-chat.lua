@@ -7,10 +7,8 @@ local resultBuffer = require('nvim-ai-chat/display/resultBuffer')
 
 M.config = {
 	token = '',
-	model = 'text-curie-001',
+	model = "gpt-3.5-turbo",
 	display = 'tab',
-	maxLength = 300,
-	temperature = 0.1
 }
 
 function M.setup(customConfig)
