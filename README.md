@@ -25,7 +25,7 @@ EOF
 " You can call the api with command ":Chat <your question>"
 command! -nargs=1 Chat lua require("nvim-ai-chat").chat(<q-args>)
 
-" You can call the command with ":'<,'>Vchat" in line select mode
-command! -range Vchat lua require("nvim-ai-chat").chatSelection(<line1>, <line2>)
+" You can call the command with ":'<,'>Vchat" or "":'<,'>Vchat your_question_here" in line select mode
+command! -range -nargs=? Vchat lua require("nvim-ai-chat").chatSelection(<line1>, <line2>, <q-args>)
 ```
 

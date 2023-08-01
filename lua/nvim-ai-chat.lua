@@ -36,9 +36,13 @@ function M.chat(question)
 	getDisplay().display(buffer)
 end
 
-function M.chatSelection(lineStart, lineEnd)
+function M.chatSelection(lineStart, lineEnd, additionalQuestion)
     local lines = vim.fn.getline(lineStart, lineEnd)
     local question = table.concat(lines, "\n")
+
+    if additionalQuestion ~= nil and additionalQuestion ~= ""  then
+        question = additionalQuestion .. "\n" .. question
+    end
     M.chat(question)
 end
 
