@@ -38,7 +38,7 @@ end
 
 function M.chatSelection(lineStart, lineEnd)
     local lines = vim.fn.getline(lineStart, lineEnd)
-    local question = table.concat(lines, "\\n")
+    local question = table.concat(lines, "\n")
     M.chat(question)
 end
 

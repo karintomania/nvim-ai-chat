@@ -2,6 +2,7 @@ local strUtil = {}
 
 -- escape special string from question for JSON
 function strUtil.escape(text)
+	text = string.gsub(text, [[	]], [[\t]])
 	text = string.gsub(text, "\n", [[\n]])
 	text = string.gsub(text, [["]], [[\"]])
 	text = string.gsub(text, [[']], [['\'']])

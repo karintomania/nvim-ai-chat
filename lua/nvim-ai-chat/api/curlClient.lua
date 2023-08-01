@@ -6,7 +6,7 @@ curlUtil.command = ''
 
 function curlUtil.init(question, config)
 
-	question = strUtil.escape(question)
+	local question = strUtil.escape(question)
 
 	local token = config.token
 	local model = config.model
