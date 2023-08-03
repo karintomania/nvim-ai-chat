@@ -24,6 +24,9 @@ require('tests/api/curlJsonResponseTest')
 package.loaded['tests/display/resultBufferTest'] = nil
 require('tests/display/resultBufferTest')
 
+package.loaded['tests/display/BufferTest'] = nil
+require('tests/display/BufferTest')
+
 -- these are skipped as it requires manual checks
 -- package.loaded['tests/display/tabDisplayTest'] = nil
 -- require('tests/display/tabDisplayTest')

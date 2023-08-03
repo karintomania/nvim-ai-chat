@@ -17,10 +17,11 @@ function Buffer:init()
 
 	-- if the buffer doesn't exist, create a new one
 	if handle == -1 then
-		handle = vim.api.nvim_create_buf(false, true)
-		vim.api.nvim_buf_set_name(handle, self.bufferName)
+		handle = vim.api.nvim_create_buf(true, true)
 	end
     self.handle = handle
+    vim.api.nvim_buf_set_name(handle, self.bufferName)
+    vim.api.nvim_buf_set_option(self.handle, "modifiable", true)
 end
 
 -- append the string to the buffer
@@ -31,7 +32,6 @@ function Buffer:append(str)
 	  -- insert each line into the table as a new element
 	  table.insert(strAry, line)
 	end
-    vim.api.nvim_buf_set_option(self.handle, "modifiable", true)
     local lines = self:read()
 
     -- Remove the first new line of empty buffer if it is empty
@@ -42,7 +42,6 @@ function Buffer:append(str)
     end
 
     vim.api.nvim_buf_set_lines(self.handle, 0, -1, true, strAry)
-    vim.api.nvim_buf_set_option(self.handle, "modifiable", false)
 end
 
 -- return the content of the buffer as array of string
@@ -52,9 +51,7 @@ end
 
 -- empty the content of buffer
 function Buffer:empty()
-    vim.api.nvim_buf_set_option(self.handle, "modifiable", true)
     vim.api.nvim_buf_set_lines(self.handle, 0, -1, true, {})
-    vim.api.nvim_buf_set_option(self.handle, "modifiable", false)
 end
 
 -- delete the buffer
