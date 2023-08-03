@@ -17,8 +17,6 @@ lua << EOF
 require("nvim-ai-chat").setup({
 	token = '<YOUR API TOKEN>', -- access token of open ai
 	model = 'gpt-3.5-turbo', -- the model to use
-	display = 'window', -- where to open the chat result. default 'tab'
-	                    -- available options for display is 'tab' or 'window'
 })
 EOF
 

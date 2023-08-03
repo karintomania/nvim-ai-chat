@@ -1,4 +1,4 @@
-local resultPrinter = {}
+local resultBuffer = {}
 
 local buffName = 'Chat_Result'
 
@@ -33,7 +33,7 @@ function formatQA(question, answer)
 	return 'Q: ' .. question .. '\nA: ' .. answer .. '\n'
 end
 
-function resultPrinter.create(question, answer)
+function resultBuffer.create(question, answer)
 	local str = formatQA(question, answer)
 	local handle = getBuffer(buffName)
 	appendBuffer(handle, str)
@@ -41,4 +41,4 @@ function resultPrinter.create(question, answer)
 	return handle
 end
 
-return resultPrinter
+return resultBuffer

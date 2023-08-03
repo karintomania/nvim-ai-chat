@@ -27,8 +27,6 @@ require('tests/display/resultBufferTest')
 -- these are skipped as it requires manual checks
 -- package.loaded['tests/display/tabDisplayTest'] = nil
 -- require('tests/display/tabDisplayTest')
--- package.loaded['tests/display/windowDisplayTest'] = nil
--- require('tests/display/windowDisplayTest')
 
 ----------------
 -- Util tests
