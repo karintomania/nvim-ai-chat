@@ -41,10 +41,6 @@ function M.chatSelection(lineStart, lineEnd, additionalQuestion)
     M.chat(question)
 end
 
-function M.startChat()
-    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
-end
-
 function M.ask()
     local questionLines = inputManager:getQuestion()
 
