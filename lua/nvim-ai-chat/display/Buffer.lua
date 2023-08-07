@@ -24,24 +24,19 @@ function Buffer:init()
     vim.api.nvim_buf_set_option(self.handle, "modifiable", true)
 end
 
--- append the string to the buffer
-function Buffer:append(str)
+-- append lines to the buffer
+function Buffer:append(lines)
 
-	local strAry = {}
-	for line in string.gmatch(str, "[^\n]+") do
-	  -- insert each line into the table as a new element
-	  table.insert(strAry, line)
-	end
-    local lines = self:read()
+    local currentLines = self:read()
 
     -- Remove the first new line of empty buffer if it is empty
-    if #lines == 0 then
+    if #currentLines <= 1 then
         start = 0
     else
         start = -1
     end
 
-    vim.api.nvim_buf_set_lines(self.handle, 0, -1, true, strAry)
+    vim.api.nvim_buf_set_lines(self.handle, start, -1, true, lines)
 end
 
 -- return the content of the buffer as array of string

@@ -36,22 +36,25 @@ local function testDelete()
 end
 
 
--- test append()
+-- test append() TODO: test append plus existing string
 local function testAppendAndRead()
     local bName = "test_append"
     local b = Buffer:new({bufferName=bName})
     b:delete()
     b:init()
-    local str = [[test 1
-test 2]]
-    b:append(str)
+
+    local lines = {"test 1", "test 2"}
+    b:append(lines)
 
     -- test the buffer is removed
-    local bufferStr = b:read()
-    local bufferStrConcat = table.concat(bufferStr, "\
-")
-    vim.fn.assert_equal(str, bufferStrConcat)
+    local bufferLines = b:read()
+    vim.fn.assert_equal(lines[1], bufferLines[1])
+    vim.fn.assert_equal(lines[2], bufferLines[2])
 
+    b:append({"test 3"})
+
+    bufferLines = b:read()
+    vim.fn.assert_equal("test 3", bufferLines[3])
     -- clear up buffers
     b:delete()
 end
@@ -60,7 +63,7 @@ end
 local function testEmpty()
     local bName = "test_empty"
     local b = Buffer:new({bufferName=bName})
-    local str = [[test 1]]
+    local str = {"test 1"}
     b:append(str)
 
     -- make sure the buffer is not empty
