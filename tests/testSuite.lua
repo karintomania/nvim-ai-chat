@@ -27,6 +27,12 @@ require('tests/display/resultBufferTest')
 package.loaded['tests/display/BufferTest'] = nil
 require('tests/display/BufferTest')
 
+package.loaded['tests/display/ChatManagerTest'] = nil
+require('tests/display/ChatManagerTest')
+
+package.loaded['tests/display/InputManagerTest'] = nil
+require('tests/display/InputManagerTest')
+
 -- these are skipped as it requires manual checks
 -- package.loaded['tests/display/tabDisplayTest'] = nil
 -- require('tests/display/tabDisplayTest')

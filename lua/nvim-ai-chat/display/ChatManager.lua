@@ -1,4 +1,4 @@
-require('lua/nvim-ai-chat/display/Buffer')
+require('nvim-ai-chat/display/Buffer')
 
 ChatManager = {
     questionPrefix = "[You]> ",
