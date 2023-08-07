@@ -1,4 +1,4 @@
-require('lua/nvim-ai-chat/display/Buffer')
+require('nvim-ai-chat/display/Buffer')
 
 InputManager = {
     header = "-- type your question below --",
@@ -26,5 +26,5 @@ end
 
 function InputManager:reset()
     self.buffer:empty()
-    self.buffer:append(self.header)
+    self.buffer:append({self.header})
 end

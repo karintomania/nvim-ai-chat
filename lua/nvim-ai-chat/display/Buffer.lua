@@ -30,7 +30,9 @@ function Buffer:append(lines)
     local currentLines = self:read()
 
     -- Remove the first new line of empty buffer if it is empty
-    if #currentLines <= 1 then
+    if #currentLines == 0 or
+        #currentLines == 1 and currentLines[1] == ""
+    then
         start = 0
     else
         start = -1

@@ -1,18 +1,25 @@
-package.loaded['lua/nvim-ai-chat/display/InputManager'] = nil
-package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
-require('lua/nvim-ai-chat/display/InputManager')
+package.loaded['nvim-ai-chat/display/InputManager'] = nil
+package.loaded['nvim-ai-chat/display/Buffer'] = nil
+require('nvim-ai-chat/display/InputManager')
 
-local im = InputManager:new()
+local function test_new_sets_header()
+    local im = InputManager:new()
+    -- test the header is set
+    vim.fn.assert_equal(im.header, im.buffer:read()[1])
+end
 
--- test the header is set
-vim.fn.assert_equal(im.header, im.buffer:read()[1])
+local function test_getQuestion()
+    local im = InputManager:new()
+    local testInput = {"test input"}
 
-local testInput = "test input"
-vim.print(im.buffer:read())
-im.buffer:append(testInput)
-vim.print(im.buffer:read())
+    im.buffer:append(testInput)
 
-vim.fn.assert_equal(1, #im:getQuestion())
-vim.fn.assert_equal(testInput, im:getQuestion()[1])
+    local question = im:getQuestion()
+    vim.fn.assert_equal(1, #question)
+    vim.fn.assert_equal(testInput[1], question[1])
+end
+
+test_new_sets_header()
+test_getQuestion()
 
 require('lua/nvim-ai-chat/util').test('InputManager')
