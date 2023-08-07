@@ -16,6 +16,8 @@ require('tests/api/apiTest')
 package.loaded['tests/api/curlJsonResponseTest'] = nil
 require('tests/api/curlJsonResponseTest')
 
+package.loaded['tests/api/chatCurlClientTest'] = nil
+require('tests/api/chatCurlClientTest')
 
 
 ----------------
