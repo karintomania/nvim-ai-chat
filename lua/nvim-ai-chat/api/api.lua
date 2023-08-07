@@ -1,6 +1,7 @@
 local api = {}
 
 local strUtil = require('nvim-ai-chat/strUtil')
+api.client = {}
 
 function api.call(question, client, config)
 	local answer = client

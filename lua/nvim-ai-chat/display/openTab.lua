@@ -15,10 +15,11 @@ function openTab.open(chatHandler, inputHandler)
     else
         -- if the buffer is open, move to the window
         vim.cmd('wincmd j')
+
     end
 
     -- go to the end of the buffer
-    vim.api.nvim_command('normal! G')
+    vim.api.nvim_command('normal! Go')
     -- enter insert mode to input question
     vim.api.nvim_command("startinsert!")
 end

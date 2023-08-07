@@ -28,3 +28,4 @@ function InputManager:reset()
     self.buffer:empty()
     self.buffer:append({self.header})
 end
+

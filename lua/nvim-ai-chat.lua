@@ -5,6 +5,14 @@ local client = require('nvim-ai-chat/api/curlClient')
 local resultBuffer = require('nvim-ai-chat/display/resultBuffer')
 local display = require('nvim-ai-chat/display/tabDisplay')
 
+require('nvim-ai-chat/display/ChatManager')
+local chatManager = ChatManager:new()
+require('nvim-ai-chat/display/InputManager')
+local inputManager = InputManager:new()
+
+local openTab = require('nvim-ai-chat/display/openTab')
+local curl = require('nvim-ai-chat/api/chatCurlClient')
+
 M.config = {
 	token = '',
 	model = "gpt-3.5-turbo",
@@ -33,6 +41,25 @@ function M.chatSelection(lineStart, lineEnd, additionalQuestion)
     M.chat(question)
 end
 
+function M.startChat()
+    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+end
+
+function M.ask()
+    local questionLines = inputManager:getQuestion()
+
+    -- if question input exists 
+    if #questionLines ~= 0 then
+        local chat = chatManager:getChat()
+        local qa = curl.call(chat, questionLines, M.config)
+
+        chatManager:addChat(qa)
+        inputManager:reset()
+    end
+
+    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+
+end
 
 return M
 
