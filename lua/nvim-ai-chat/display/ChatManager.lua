@@ -3,7 +3,7 @@ require('nvim-ai-chat/display/Buffer')
 ChatManager = {
     questionPrefix = "[You]> ",
     answerPrefix = "[GPT]> ",
-    indent = "|      ",
+    indent = "",
     buffName = "Chat_Main",
 }
 

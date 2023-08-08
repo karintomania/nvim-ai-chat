@@ -32,12 +32,12 @@ local function test_chatToCommand()
     }
 
     local question = {"second question"}
-    local config = {
+    _G.config = {
         token="test_token",
         model="test_model",
     }
 
-    local res = curl.chatToCommand(chat, question, config)
+    local res = curl.chatToCommand(chat, question)
 
     local expected = [[curl https://api.openai.com/v1/chat/completions -s \
 -H "Content-Type: application/json" \

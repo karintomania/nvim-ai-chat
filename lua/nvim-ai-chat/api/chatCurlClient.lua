@@ -3,9 +3,9 @@ local strUtil = require('nvim-ai-chat/strUtil')
 
 chatCurlClient.command = ''
 
-function chatCurlClient.call(chat, questionLines, config)
+function chatCurlClient.call(chat, questionLines)
 
-    local command = chatCurlClient.chatToCommand(chat, questionLines, config)
+    local command = chatCurlClient.chatToCommand(chat, questionLines)
 
     local response = chatCurlClient.runCurl(command)
 
@@ -24,10 +24,10 @@ local function processLines(lines)
     return processedLines
 end
 
-function chatCurlClient.chatToCommand(chat, questionLines, config)
+function chatCurlClient.chatToCommand(chat, questionLines)
 
-    local token = config.token
-    local model = config.model
+    local token = _G.config.token
+    local model = _G.config.model
 
     local chatString = chatCurlClient.chatToStringArray(chat, questionLines)
 
