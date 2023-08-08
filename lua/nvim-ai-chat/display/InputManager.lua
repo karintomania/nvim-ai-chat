@@ -1,8 +1,6 @@
 require('nvim-ai-chat/display/Buffer')
 
-InputManager = {
-    header = "-- type your question below --",
-}
+InputManager = {header = "-- type your question below --"}
 
 function InputManager:new(o)
     o = o or {}

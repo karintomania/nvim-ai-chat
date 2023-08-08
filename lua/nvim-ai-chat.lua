@@ -8,15 +8,24 @@ local inputManager = InputManager:new()
 local openTab = require('nvim-ai-chat/display/openTab')
 local curl = require('nvim-ai-chat/api/chatCurlClient')
 
-_G.config = {
-    token = '',
-    model = "gpt-3.5-turbo",
-    inputHeight = 10
-}
+_G.config = {token = '', model = "gpt-3.5-turbo", inputHeight = 10}
 
 function M.setup(customConfig)
-	local filled = vim.tbl_deep_extend("keep", customConfig, _G.config)
-	_G.config = filled
+    local filled = vim.tbl_deep_extend("keep", customConfig, _G.config)
+    _G.config = filled
+end
+
+local function callApi(chat, questionLines)
+    local qa = curl.call(chat, questionLines)
+
+    chatManager:addChat(qa)
+    inputManager:reset()
+    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+end
+
+local function validateQuestion(questionLines)
+    local q = table.concat(questionLines)
+    if q == "" then error("question shouldn't be blank") end
 end
 
 function M.ask()
@@ -24,14 +33,15 @@ function M.ask()
 
     -- if question input exists 
     if #questionLines ~= 0 then
+        validateQuestion(questionLines)
+
         local chat = chatManager:getChat()
-        local qa = curl.call(chat, questionLines)
 
-        chatManager:addChat(qa)
-        inputManager:reset()
+        -- TODO: call asynchronously without blocking UI
+        callApi(chat, questionLines)
+    else
+        openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
     end
-
-    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
 
 end
 

@@ -31,7 +31,8 @@ function chatCurlClient.chatToCommand(chat, questionLines)
 
     local chatString = chatCurlClient.chatToStringArray(chat, questionLines)
 
-    local command = string.format([[curl https://api.openai.com/v1/chat/completions -s \
+    local command = string.format(
+                        [[curl https://api.openai.com/v1/chat/completions -s \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer %s" \
 -d '{"model": "%s", "messages": %s}'
@@ -40,11 +41,9 @@ function chatCurlClient.chatToCommand(chat, questionLines)
     return command
 end
 
-
 function chatCurlClient.chatToStringArray(chat, questionLines)
 
     local res = ""
-
 
     for i, pair in ipairs(chat) do
         local q = processLines(pair.question)
@@ -67,9 +66,7 @@ function chatCurlClient.runCurl(command)
     -- error handling
     local index = string.find(output, "\"error\":")
 
-    if index ~= nil then 
-        error(output)
-    end
+    if index ~= nil then error(output) end
 
     return output
 end
@@ -82,9 +79,9 @@ local function getAnswer(response)
 
     local escaped = strUtil.unescape(answer)
 
-    local answerLines={}
+    local answerLines = {}
     for str in string.gmatch(escaped, "([^\n]+)") do
-            table.insert(answerLines, str)
+        table.insert(answerLines, str)
     end
 
     return answerLines
@@ -93,17 +90,11 @@ end
 function chatCurlClient.getQA(questionLines, response)
     -- get answer from response
     local answer = getAnswer(response)
-    local qa = {
-        question=questionLines,
-        answer=answer,
-    }
+    local qa = {question = questionLines, answer = answer}
 
     return qa
 end
 
-function chatCurlClient.jsonToChat()
-    return {}
-end
-
+function chatCurlClient.jsonToChat() return {} end
 
 return chatCurlClient

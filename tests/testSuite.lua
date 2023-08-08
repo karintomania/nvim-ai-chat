@@ -3,13 +3,11 @@
 ----------------
 -- package.loaded['tests/featureTest'] = nil
 -- require('tests/featureTest')
-
 ----------------
 -- API tests
 ----------------
 package.loaded['tests/api/chatCurlClientTest'] = nil
 require('tests/api/chatCurlClientTest')
-
 
 ----------------
 -- Display tests

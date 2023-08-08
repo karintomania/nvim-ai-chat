@@ -25,46 +25,42 @@ function ChatManager:getChat()
 end
 
 function ChatManager:convertChatToTable(chat)
-  local result = {}
-  local function addQA(question, answer)
-    table.insert(result, {
-      question = question,
-      answer = answer
-    })
-  end
-
-  local currentQuestion = {}
-  local currentAnswer = {}
-  local isQuestion = true
-
-  -- TODO: rewrite in regex?
-  for i, line in ipairs(chat) do
-    if string.sub(line, 1, 7) == self.questionPrefix then
-      table.insert(currentQuestion, (line:gsub("%[You%]%> ", "")))
-      isQuestion = true
-    elseif string.sub(line, 1, 7) == self.answerPrefix then
-      isQuestion = false
-      table.insert(currentAnswer, (line:gsub("%[GPT%]%> ", "")))
-    else
-      if isQuestion then
-        table.insert(currentQuestion, (line:gsub(self.indent, "")))
-      else
-        table.insert(currentAnswer, (line:gsub(self.indent, "")))
-      end
+    local result = {}
+    local function addQA(question, answer)
+        table.insert(result, {question = question, answer = answer})
     end
 
-    if  -- when next line includes question prefix or final line
-      (chat[i+1] and
-       string.sub(chat[i+1], 1, 7) == self.questionPrefix) or
-      i == #chat then 
-      addQA(currentQuestion, currentAnswer)
-      currentQuestion = {}
-      currentAnswer = {}
+    local currentQuestion = {}
+    local currentAnswer = {}
+    local isQuestion = true
+
+    -- TODO: rewrite in regex?
+    for i, line in ipairs(chat) do
+        if string.sub(line, 1, 7) == self.questionPrefix then
+            table.insert(currentQuestion, (line:gsub("%[You%]%> ", "")))
+            isQuestion = true
+        elseif string.sub(line, 1, 7) == self.answerPrefix then
+            isQuestion = false
+            table.insert(currentAnswer, (line:gsub("%[GPT%]%> ", "")))
+        else
+            if isQuestion then
+                table.insert(currentQuestion, (line:gsub(self.indent, "")))
+            else
+                table.insert(currentAnswer, (line:gsub(self.indent, "")))
+            end
+        end
+
+        if -- when next line includes question prefix or final line
+        (chat[i + 1] and string.sub(chat[i + 1], 1, 7) == self.questionPrefix) or
+            i == #chat then
+            addQA(currentQuestion, currentAnswer)
+            currentQuestion = {}
+            currentAnswer = {}
+        end
+
     end
 
-  end
-
-  return result
+    return result
 
 end
 
@@ -94,6 +90,4 @@ function ChatManager:formatLines(rawLines, prefix)
     return lines
 end
 
-function ChatManager:reset()
-    self.buffer:empty()
-end
+function ChatManager:reset() self.buffer:empty() end

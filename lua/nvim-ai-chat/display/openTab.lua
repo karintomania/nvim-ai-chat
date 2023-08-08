@@ -21,7 +21,7 @@ function openTab.open(chatHandler, inputHandler)
     -- go to the end of the buffer
     vim.api.nvim_command('normal! Go')
     -- enter insert mode to input question
-    vim.api.nvim_command("resize ".._G.config.inputHeight)
+    vim.api.nvim_command("resize " .. _G.config.inputHeight)
     vim.api.nvim_command("startinsert!")
 end
 

@@ -4,13 +4,10 @@ local curl = require('lua/nvim-ai-chat/api/chatCurlClient')
 local function test_chatToStringArray()
     local chat = {
         {
-            question={"This is the ", "first question"},
-            answer={"first answer"},
+            question = {"This is the ", "first question"},
+            answer = {"first answer"},
         },
-        {
-            question={"second question"},
-            answer={"second answer"},
-        },
+        {question = {"second question"}, answer = {"second answer"}},
     }
 
     -- local question = {"This is the ", "third question"}
@@ -18,24 +15,18 @@ local function test_chatToStringArray()
 
     local res = curl.chatToStringArray(chat, question)
 
-    local expected = [[[{"role": "user", "content": "This is the \nfirst question"},{"role": "assistant", "content": "first answer"},{"role": "user", "content": "second question"},{"role": "assistant", "content": "second answer"},{"role": "user", "content": "third question"}]] .."]"
+    local expected =
+        [[[{"role": "user", "content": "This is the \nfirst question"},{"role": "assistant", "content": "first answer"},{"role": "user", "content": "second question"},{"role": "assistant", "content": "second answer"},{"role": "user", "content": "third question"}]] ..
+            "]"
     vim.fn.assert_equal(expected, res)
 end
 
 local function test_chatToCommand()
 
-    local chat = {
-        {
-            question={"first question"},
-            answer={"first answer"},
-        },
-    }
+    local chat = {{question = {"first question"}, answer = {"first answer"}}}
 
     local question = {"second question"}
-    _G.config = {
-        token="test_token",
-        model="test_model",
-    }
+    _G.config = {token = "test_token", model = "test_model"}
 
     local res = curl.chatToCommand(chat, question)
 

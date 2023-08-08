@@ -5,15 +5,13 @@ require('lua/nvim-ai-chat/display/Buffer')
 local function testNew()
 
     local bName = "test_name"
-    local bufferNew = Buffer:new({bufferName=bName})
+    local bufferNew = Buffer:new({bufferName = bName})
     -- test the buffer is created
     local handle = vim.fn.bufnr(bName)
     vim.fn.assert_notequal(-1, handle)
 
     -- test if the existing buffer is used
-    local bufferExist = Buffer:new(
-            {bufferName=bName}
-        )
+    local bufferExist = Buffer:new({bufferName = bName})
     vim.fn.assert_equal(handle, bufferExist.handle)
 
     -- clear up buffers
@@ -23,7 +21,7 @@ end
 -- test delete()
 local function testDelete()
     local bName = "test_delete"
-    local b = Buffer:new({bufferName=bName})
+    local b = Buffer:new({bufferName = bName})
     b:delete()
 
     -- test the buffer is removed
@@ -35,11 +33,10 @@ local function testDelete()
 
 end
 
-
 -- test append() TODO: test append plus existing string
 local function testAppendAndRead()
     local bName = "test_append"
-    local b = Buffer:new({bufferName=bName})
+    local b = Buffer:new({bufferName = bName})
     b:delete()
     b:init()
 
@@ -62,7 +59,7 @@ end
 -- test empty
 local function testEmpty()
     local bName = "test_empty"
-    local b = Buffer:new({bufferName=bName})
+    local b = Buffer:new({bufferName = bName})
     local str = {"test 1"}
     b:append(str)
 

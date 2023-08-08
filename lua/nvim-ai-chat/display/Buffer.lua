@@ -1,4 +1,4 @@
-Buffer = {bufferName=""}
+Buffer = {bufferName = ""}
 
 function Buffer:new(o)
     o = o or {}
@@ -12,13 +12,11 @@ function Buffer:init()
     -- bufferName shouldn't be blank
     assert(self.bufferName ~= "")
 
-	-- get buffer handle by name
-	local handle = vim.fn.bufnr(self.bufferName)
+    -- get buffer handle by name
+    local handle = vim.fn.bufnr(self.bufferName)
 
-	-- if the buffer doesn't exist, create a new one
-	if handle == -1 then
-		handle = vim.api.nvim_create_buf(true, true)
-	end
+    -- if the buffer doesn't exist, create a new one
+    if handle == -1 then handle = vim.api.nvim_create_buf(true, true) end
     self.handle = handle
     vim.api.nvim_buf_set_name(handle, self.bufferName)
     vim.api.nvim_buf_set_option(self.handle, "modifiable", true)
@@ -30,9 +28,7 @@ function Buffer:append(lines)
     local currentLines = self:read()
 
     -- Remove the first new line of empty buffer if it is empty
-    if #currentLines == 0 or
-        #currentLines == 1 and currentLines[1] == ""
-    then
+    if #currentLines == 0 or #currentLines == 1 and currentLines[1] == "" then
         start = 0
     else
         start = -1
@@ -47,12 +43,10 @@ function Buffer:read()
 end
 
 -- empty the content of buffer
-function Buffer:empty()
-    vim.api.nvim_buf_set_lines(self.handle, 0, -1, true, {})
-end
+function Buffer:empty() vim.api.nvim_buf_set_lines(self.handle, 0, -1, true, {}) end
 
 -- delete the buffer
 function Buffer:delete()
-  vim.api.nvim_buf_delete(self.handle, {force = true})
-  self.handle = -1
+    vim.api.nvim_buf_delete(self.handle, {force = true})
+    self.handle = -1
 end
