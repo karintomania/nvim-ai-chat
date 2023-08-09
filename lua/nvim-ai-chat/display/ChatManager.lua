@@ -35,6 +35,7 @@ function ChatManager:convertChatToTable(chat)
     local isQuestion = true
 
     -- TODO: rewrite in regex?
+    -- TODO: add if for blank chat
     for i, line in ipairs(chat) do
         if string.sub(line, 1, 7) == self.questionPrefix then
             table.insert(currentQuestion, (line:gsub("%[You%]%> ", "")))

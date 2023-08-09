@@ -1,15 +1,25 @@
 local chatCurlClient = {}
 local strUtil = require('nvim-ai-chat/strUtil')
+local asyncCurl = require('nvim-ai-chat/api/asyncCurl')
 
 chatCurlClient.command = ''
 
-function chatCurlClient.call(chat, questionLines)
+function chatCurlClient.call(chat, questionLines, handleQa)
 
-    local command = chatCurlClient.chatToCommand(chat, questionLines)
+    vim.print(chat)
 
-    local response = chatCurlClient.runCurl(command)
+    -- local command = chatCurlClient.chatToCommand(chat, questionLines)
+    local options = chatCurlClient.chatToOptions(chat, questionLines)
 
-    return chatCurlClient.getQA(questionLines, response)
+    -- local response = chatCurlClient.runCurl(command)
+    -- return chatCurlClient.getQA(questionLines, response)
+
+    local callback = function(response)
+        local qa = chatCurlClient.getQA(questionLines, response)
+        handleQa(qa)
+    end
+
+    asyncCurl.call(options, callback)
 
 end
 
@@ -22,6 +32,26 @@ local function processLines(lines)
     local processedLines = table.concat(lines, "\n")
     processedLines = strUtil.escape(processedLines)
     return processedLines
+end
+
+function chatCurlClient.chatToOptions(chat, questionLines)
+
+    local token = _G.config.token
+    local model = _G.config.model
+
+    local chatString = chatCurlClient.chatToStringArray(chat, questionLines)
+
+    local body = string.format('-d{"model":"%s", "messages": %s}', model, chatString)
+
+    local options={
+            "https://api.openai.com/v1/chat/completions",
+            "-sS",
+            "-HContent-Type: application/json",
+            "-HAuthorization: Bearer " .. token,
+            body
+            }
+
+    return options
 end
 
 function chatCurlClient.chatToCommand(chat, questionLines)

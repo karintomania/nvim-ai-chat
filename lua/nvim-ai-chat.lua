@@ -16,11 +16,16 @@ function M.setup(customConfig)
 end
 
 local function callApi(chat, questionLines)
-    local qa = curl.call(chat, questionLines)
 
-    chatManager:addChat(qa)
-    inputManager:reset()
-    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+    local function handleQa(qa)
+        chatManager:addChat(qa)
+        inputManager:reset()
+        openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+    end
+
+    local qa = curl.call(chat, questionLines, handleQa)
+    -- handleNewQa(qa)
+
 end
 
 local function validateQuestion(questionLines)
