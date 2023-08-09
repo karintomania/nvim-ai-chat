@@ -17,14 +17,13 @@ end
 
 local function callApi(chat, questionLines)
 
-    local function handleQa(qa)
+    local handleQa = vim.schedule_wrap(function(qa)
         chatManager:addChat(qa)
         inputManager:reset()
         openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
-    end
+    end)
 
     local qa = curl.call(chat, questionLines, handleQa)
-    -- handleNewQa(qa)
 
 end
 

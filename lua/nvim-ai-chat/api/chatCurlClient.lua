@@ -6,8 +6,6 @@ chatCurlClient.command = ''
 
 function chatCurlClient.call(chat, questionLines, handleQa)
 
-    vim.print(chat)
-
     -- local command = chatCurlClient.chatToCommand(chat, questionLines)
     local options = chatCurlClient.chatToOptions(chat, questionLines)
 

@@ -4,7 +4,6 @@ function asyncCurl.call(options, callback)
     local stdout = uv.new_pipe()
     local stderr = uv.new_pipe()
 
-    vim.print(options)
     local handle, pid = uv.spawn("curl", {
         args = options, stdio = {nil, stdout, stderr}
     }, function(code, signal) -- on exit
@@ -30,5 +29,3 @@ function asyncCurl.call(options, callback)
 end
 
 return asyncCurl
--- local body = '{"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "Who won the world series in 2020?"}]}'
--- asyncCurl(body, function(res) vim.print(res) end)
