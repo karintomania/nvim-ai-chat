@@ -1,8 +1,8 @@
 ----------------
 -- feature test
 ----------------
--- package.loaded['tests/featureTest'] = nil
--- require('tests/featureTest')
+-- package.loaded['tests/feature/asyncCurlTest'] = nil
+-- require('tests/feature/asyncCurlTest')
 ----------------
 -- API tests
 ----------------

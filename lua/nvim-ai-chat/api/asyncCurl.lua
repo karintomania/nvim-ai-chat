@@ -8,6 +8,7 @@ function asyncCurl.call(options, callback)
         args = options, stdio = {nil, stdout, stderr}
     }, function(code, signal) -- on exit
         if code == 0 then
+            -- on successful curl
             uv.read_start(stdout, function(err, data)
               assert(not err, err)
               if data then
@@ -16,7 +17,7 @@ function asyncCurl.call(options, callback)
               end
             end)
         else
-            -- when exit code isn't 0
+            -- on error (exit code isn't 0)
             uv.read_start(stderr, function(err, data)
               assert(not err, err)
               if data then

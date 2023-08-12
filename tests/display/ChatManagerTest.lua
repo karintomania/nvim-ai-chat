@@ -8,9 +8,9 @@ local function test_ConvertChatToTable()
         "[You]> This is the first question",
         "[GPT]> This is the first answer",
         "[You]> This is",
-        "|      the second question",
+        cm.indent .. "the second question",
         "[GPT]> This is",
-        "|      the second answer",
+        cm.indent .. "the second answer",
     }
     local res = cm:convertChatToTable(input)
 

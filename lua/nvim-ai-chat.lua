@@ -15,12 +15,16 @@ function M.setup(customConfig)
     _G.config = filled
 end
 
+local function openChatTab()
+        openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+end
+
 local function callApi(chat, questionLines)
 
     local handleQa = vim.schedule_wrap(function(qa)
         chatManager:addChat(qa)
         inputManager:reset()
-        openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+        openChatTab()
     end)
 
     local qa = curl.call(chat, questionLines, handleQa)
@@ -29,7 +33,10 @@ end
 
 local function validateQuestion(questionLines)
     local q = table.concat(questionLines)
-    if q == "" then error("question shouldn't be blank") end
+    if q == "" then 
+        openChatTab()
+        error("question shouldn't be blank")
+    end
 end
 
 function M.ask()
@@ -44,7 +51,7 @@ function M.ask()
         -- TODO: call asynchronously without blocking UI
         callApi(chat, questionLines)
     else
-        openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+        openChatTab()
     end
 
 end

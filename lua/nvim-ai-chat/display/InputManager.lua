@@ -7,7 +7,7 @@ function InputManager:new(o)
     setmetatable(o, self)
     self.__index = self
 
-    bufferName = "Chat_Input"
+    local bufferName = "Chat_Input"
 
     o.buffer = Buffer:new({bufferName = bufferName})
     o:reset()

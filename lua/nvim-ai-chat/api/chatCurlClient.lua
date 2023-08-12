@@ -6,11 +6,7 @@ chatCurlClient.command = ''
 
 function chatCurlClient.call(chat, questionLines, handleQa)
 
-    -- local command = chatCurlClient.chatToCommand(chat, questionLines)
     local options = chatCurlClient.chatToOptions(chat, questionLines)
-
-    -- local response = chatCurlClient.runCurl(command)
-    -- return chatCurlClient.getQA(questionLines, response)
 
     local callback = function(response)
         local qa = chatCurlClient.getQA(questionLines, response)
@@ -32,44 +28,7 @@ local function processLines(lines)
     return processedLines
 end
 
-function chatCurlClient.chatToOptions(chat, questionLines)
-
-    local token = _G.config.token
-    local model = _G.config.model
-
-    local chatString = chatCurlClient.chatToStringArray(chat, questionLines)
-
-    local body = string.format('-d{"model":"%s", "messages": %s}', model, chatString)
-
-    local options={
-            "https://api.openai.com/v1/chat/completions",
-            "-sS",
-            "-HContent-Type: application/json",
-            "-HAuthorization: Bearer " .. token,
-            body
-            }
-
-    return options
-end
-
-function chatCurlClient.chatToCommand(chat, questionLines)
-
-    local token = _G.config.token
-    local model = _G.config.model
-
-    local chatString = chatCurlClient.chatToStringArray(chat, questionLines)
-
-    local command = string.format(
-                        [[curl https://api.openai.com/v1/chat/completions -s \
--H "Content-Type: application/json" \
--H "Authorization: Bearer %s" \
--d '{"model": "%s", "messages": %s}'
-]], token, model, chatString)
-
-    return command
-end
-
-function chatCurlClient.chatToStringArray(chat, questionLines)
+local function chatToStringArray(chat, questionLines)
 
     local res = ""
 
@@ -85,23 +44,33 @@ function chatCurlClient.chatToStringArray(chat, questionLines)
     return "[" .. res .. "]"
 end
 
-function chatCurlClient.runCurl(command)
+function chatCurlClient.chatToOptions(chat, questionLines)
 
-    local handle = assert(io.popen(command, 'r'))
-    local output = assert(handle:read('*a'))
-    handle:close()
+    local token = _G.config.token
+    local model = _G.config.model
 
-    -- error handling
-    local index = string.find(output, "\"error\":")
+    local chatString = chatToStringArray(chat, questionLines)
 
-    if index ~= nil then error(output) end
+    local body = string.format('-d{"model": "%s", "messages": %s}', model, chatString)
 
-    return output
+    local options={
+            "https://api.openai.com/v1/chat/completions",
+            "-sS",
+            "-HContent-Type: application/json",
+            "-HAuthorization: Bearer " .. token,
+            body
+            }
+
+    return options
 end
 
 local function getAnswer(response)
 
     local start_index = string.find(response, "\"content\": \"")
+    if start_index == nil then
+        -- json doesnt' contain the answer because something went wrong
+        error(response)
+    end
     local end_index = string.find(response, '"\n', start_index + 8)
     local answer = string.sub(response, start_index + 12, end_index - 1)
 
