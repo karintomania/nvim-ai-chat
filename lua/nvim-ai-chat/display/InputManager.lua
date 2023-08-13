@@ -27,3 +27,20 @@ function InputManager:reset()
     self.buffer:append({self.header})
 end
 
+function InputManager:validateQuestion()
+    local questionLines = self:getQuestion()
+
+    if #questionLines == 0 then
+        -- when the tab hasn't opened, #questionLines returns 0
+        -- as the Go command hasn't excuted, the buffer doesn't have newline after the header.
+        return false
+    end
+
+    local q = table.concat(questionLines)
+    if q == "" then
+        vim.api.nvim_err_writeln("question shouldn't be blank!!")
+        return false
+    end
+
+    return true
+end

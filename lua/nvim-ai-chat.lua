@@ -19,7 +19,17 @@ local function openChatTab()
     openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
 end
 
-local function callApi(chat, questionLines)
+
+function M.ask()
+
+    -- if question input exists 
+    if not inputManager:validateQuestion(questionLines) then
+        openChatTab()
+        return
+    end
+
+    local questionLines = inputManager:getQuestion()
+    local chat = chatManager:getChat()
 
     local handleQa = vim.schedule_wrap(function(qa)
         chatManager:addChat(qa)
@@ -28,31 +38,6 @@ local function callApi(chat, questionLines)
     end)
 
     local qa = curl.call(chat, questionLines, handleQa)
-
-end
-
-local function validateQuestion(questionLines)
-    local q = table.concat(questionLines)
-    if q == "" then
-        openChatTab()
-        error("question shouldn't be blank")
-    end
-end
-
-function M.ask()
-    local questionLines = inputManager:getQuestion()
-
-    -- if question input exists 
-    if #questionLines ~= 0 then
-        validateQuestion(questionLines)
-
-        local chat = chatManager:getChat()
-
-        -- TODO: call asynchronously without blocking UI
-        callApi(chat, questionLines)
-    else
-        openChatTab()
-    end
 
 end
 
