@@ -1,38 +1,45 @@
 local M = {}
 
-local api = require('nvim-ai-chat/api/api')
-local client = require('nvim-ai-chat/api/curlClient')
-local resultBuffer = require('nvim-ai-chat/display/resultBuffer')
-local display = require('nvim-ai-chat/display/tabDisplay')
+require('nvim-ai-chat/display/ChatManager')
+local chatManager = ChatManager:new()
+require('nvim-ai-chat/display/InputManager')
+local inputManager = InputManager:new()
 
-M.config = {
-	token = '',
-	model = "gpt-3.5-turbo",
-}
+local openTab = require('nvim-ai-chat/display/openTab')
+local curl = require('nvim-ai-chat/api/chatCurlClient')
+
+_G.config = {token = '', model = "gpt-3.5-turbo", inputHeight = 10}
 
 function M.setup(customConfig)
-	local filled = vim.tbl_deep_extend("keep", customConfig, M.config)
-	M.config = filled
+    local filled = vim.tbl_deep_extend("keep", customConfig, _G.config)
+    _G.config = filled
 end
 
-function M.chat(question)
-	local answer = api.call(question, client, M.config)
-
-	local buffer = resultBuffer.create(question, answer)
-	
-	display.display(buffer)
+local function openChatTab()
+    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
 end
 
-function M.chatSelection(lineStart, lineEnd, additionalQuestion)
-    local lines = vim.fn.getline(lineStart, lineEnd)
-    local question = table.concat(lines, "\n")
 
-    if additionalQuestion ~= nil and additionalQuestion ~= ""  then
-        question = additionalQuestion .. "\n" .. question
+function M.ask()
+
+    -- if question input exists 
+    if not inputManager:validateQuestion(questionLines) then
+        openChatTab()
+        return
     end
-    M.chat(question)
-end
 
+    local questionLines = inputManager:getQuestion()
+    local chat = chatManager:getChat()
+
+    local handleQa = vim.schedule_wrap(function(qa)
+        chatManager:addChat(qa)
+        inputManager:reset()
+        openChatTab()
+    end)
+
+    local qa = curl.call(chat, questionLines, handleQa)
+
+end
 
 return M
 
