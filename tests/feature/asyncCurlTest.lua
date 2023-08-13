@@ -10,18 +10,21 @@ local options = {
     "-sS",
     "-HContent-Type: application/json",
     "-HAuthorization: Bearer " .. secret,
-    [[-d{"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "Count 1 to 3. Separate the numbers by comma."}]}]]
+    [[-d{"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "Count 1 to 3. Separate the numbers by comma."}]}]],
 }
 
 local callback = function(response)
 
-    local questionLines={question}
+    local questionLines = {question}
     local qa = curl.getQA(questionLines, response)
 
     -- can't use vim.fn.assert_equal inside vim.schedule_wrap
-    assert(question == qa.question[1], question .. "expected, but got " ..qa.question[1])
-    assert("1, 2, 3" == qa.answer[1], "1, 2, 3" .. "expected, but got " ..qa.answer[1])
+    assert(question == qa.question[1],
+           question .. "expected, but got " .. qa.question[1])
+    assert("1, 2, 3" == qa.answer[1],
+           "1, 2, 3" .. "expected, but got " .. qa.answer[1])
 
+    require('lua/nvim-ai-chat/util').test('asyncCurlTest')
 end
 
 asyncCurl.call(options, vim.schedule_wrap(callback))

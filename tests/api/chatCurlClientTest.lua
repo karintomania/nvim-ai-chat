@@ -11,11 +11,11 @@ local function test_chatToOptions()
     local options = curl.chatToOptions(chat, question)
 
     local expected = {
-    "https://api.openai.com/v1/chat/completions",
-    "-sS",
-    "-HContent-Type: application/json",
-    "-HAuthorization: Bearer test_token",
-    [[-d{"model": "test_model", "messages": [{"role": "user", "content": "first question"},{"role": "assistant", "content": "first answer"},{"role": "user", "content": "This is the\nsecond question"}]}]]
+        "https://api.openai.com/v1/chat/completions",
+        "-sS",
+        "-HContent-Type: application/json",
+        "-HAuthorization: Bearer test_token",
+        [[-d{"model": "test_model", "messages": [{"role": "user", "content": "first question"},{"role": "assistant", "content": "first answer"},{"role": "user", "content": "This is the\nsecond question"}]}]],
     }
 
     vim.fn.assert_equal(expected[1], options[1])

@@ -51,15 +51,16 @@ function chatCurlClient.chatToOptions(chat, questionLines)
 
     local chatString = chatToStringArray(chat, questionLines)
 
-    local body = string.format('-d{"model": "%s", "messages": %s}', model, chatString)
+    local body = string.format('-d{"model": "%s", "messages": %s}', model,
+                               chatString)
 
-    local options={
-            "https://api.openai.com/v1/chat/completions",
-            "-sS",
-            "-HContent-Type: application/json",
-            "-HAuthorization: Bearer " .. token,
-            body
-            }
+    local options = {
+        "https://api.openai.com/v1/chat/completions",
+        "-sS",
+        "-HContent-Type: application/json",
+        "-HAuthorization: Bearer " .. token,
+        body,
+    }
 
     return options
 end

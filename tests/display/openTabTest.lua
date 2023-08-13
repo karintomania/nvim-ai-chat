@@ -4,9 +4,7 @@ local openTab = require('nvim-ai-chat/display/openTab')
 package.loaded['nvim-ai-chat/display/Buffer'] = nil
 require('nvim-ai-chat/display/Buffer')
 
-_G.config = {
-    inputHeight = 10
-}
+_G.config = {inputHeight = 10}
 
 local chatBuffer = Buffer:new({bufferName = "chat"})
 chatBuffer:append({"chat!"})
@@ -19,3 +17,5 @@ chatWinNum = vim.fn.bufwinnr(chatBuffer.handle)
 inputWinNum = vim.fn.bufwinnr(inputBuffer.handle)
 vim.fn.assert_notequal(-1, chatWinNum)
 vim.fn.assert_notequal(-1, inputWinNum)
+
+require('lua/nvim-ai-chat/util').test('openTabTest')

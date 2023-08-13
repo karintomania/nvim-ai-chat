@@ -16,7 +16,7 @@ function M.setup(customConfig)
 end
 
 local function openChatTab()
-        openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
 end
 
 local function callApi(chat, questionLines)
@@ -33,7 +33,7 @@ end
 
 local function validateQuestion(questionLines)
     local q = table.concat(questionLines)
-    if q == "" then 
+    if q == "" then
         openChatTab()
         error("question shouldn't be blank")
     end

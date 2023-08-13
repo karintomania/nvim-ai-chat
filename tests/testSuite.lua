@@ -1,8 +1,8 @@
 ----------------
 -- feature test
 ----------------
--- package.loaded['tests/feature/asyncCurlTest'] = nil
--- require('tests/feature/asyncCurlTest')
+package.loaded['tests/feature/asyncCurlTest'] = nil
+require('tests/feature/asyncCurlTest')
 ----------------
 -- API tests
 ----------------
@@ -22,8 +22,8 @@ package.loaded['tests/display/InputManagerTest'] = nil
 require('tests/display/InputManagerTest')
 
 -- these are skipped as it requires manual checks
--- package.loaded['tests/display/openTabTest'] = nil
--- require('tests/display/openTabTest'')
+package.loaded['tests/display/openTabTest'] = nil
+require('tests/display/openTabTest')
 
 ----------------
 -- Util tests
