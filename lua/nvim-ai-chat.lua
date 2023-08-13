@@ -1,5 +1,6 @@
 local M = {}
 
+-- TODO: create buffers when :Chat is called for the first time instead of plugin load
 require('nvim-ai-chat/display/ChatManager')
 local chatManager = ChatManager:new()
 require('nvim-ai-chat/display/InputManager')
