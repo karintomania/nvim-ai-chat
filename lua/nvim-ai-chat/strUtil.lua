@@ -6,7 +6,6 @@ function strUtil.escape(text)
     text = string.gsub(text, [[	]], [[\t]])
     text = string.gsub(text, "\n", [[\n]])
     text = string.gsub(text, [["]], [[\"]])
-    text = string.gsub(text, [[']], [['\'']])
     return text
 end
 
