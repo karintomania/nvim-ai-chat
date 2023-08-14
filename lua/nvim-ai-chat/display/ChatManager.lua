@@ -19,6 +19,11 @@ end
 function ChatManager:getChat()
 
     local str = self.buffer:read()
+
+    if #str == 0 or table.concat(str) == "" then
+        return {}
+    end
+
     local result = self:convertChatToTable(str)
 
     return result

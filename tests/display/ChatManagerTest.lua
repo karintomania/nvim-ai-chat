@@ -2,7 +2,7 @@ package.loaded['lua/nvim-ai-chat/display/ChatManager'] = nil
 package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
 require('lua/nvim-ai-chat/display/ChatManager')
 
-local function test_ConvertChatToTable()
+local function test_ConvertChatToTable_converts_chat_to_table()
     local cm = ChatManager:new()
     local input = {
         "[You]> This is the first question",
@@ -21,6 +21,14 @@ local function test_ConvertChatToTable()
     vim.fn.assert_equal('the second question', res[2].question[2])
     vim.fn.assert_equal('This is', res[2].answer[1])
     vim.fn.assert_equal('the second answer', res[2].answer[2])
+end
+
+local function test_ConvertChatToTable_returns_blank_table_if_chat_is_blank()
+    local cm = ChatManager:new()
+    local input = {}
+    local res = cm:convertChatToTable(input)
+
+    vim.fn.assert_equal(0, #res)
 end
 
 local function test_addChat_and_getChat()
@@ -55,7 +63,8 @@ local function test_addChat_and_getChat()
     vim.fn.assert_equal('the second answer', res[2].answer[2])
 end
 
-test_ConvertChatToTable()
+test_ConvertChatToTable_converts_chat_to_table()
+test_ConvertChatToTable_returns_blank_table_if_chat_is_blank()
 test_addChat_and_getChat()
 
 require('lua/nvim-ai-chat/util').test('ChatManager')
