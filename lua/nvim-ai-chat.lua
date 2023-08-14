@@ -24,7 +24,7 @@ end
 function M.ask()
 
     -- if question input exists 
-    if not inputManager:validateQuestion(questionLines) then
+    if not inputManager:validateQuestion() then
         openChatTab()
         return
     end
