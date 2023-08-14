@@ -2,12 +2,18 @@ local M = {}
 
 -- TODO: create buffers when :Chat is called for the first time instead of plugin load
 require('nvim-ai-chat/display/ChatManager')
-local chatManager = ChatManager:new()
 require('nvim-ai-chat/display/InputManager')
-local inputManager = InputManager:new()
-
 local openTab = require('nvim-ai-chat/display/openTab')
 local curl = require('nvim-ai-chat/api/chatCurlClient')
+
+local function initBuffers()
+    if M.chatManager == nil then
+        M.chatManager = ChatManager:new()
+    end
+    if M.inputManager == nil then
+        M.inputManager = InputManager:new()
+    end
+end
 
 _G.config = {token = '', model = "gpt-3.5-turbo", inputHeight = 10}
 
@@ -17,24 +23,26 @@ function M.setup(customConfig)
 end
 
 local function openChatTab()
-    openTab.open(chatManager.buffer.handle, inputManager.buffer.handle)
+    openTab.open(M.chatManager.buffer.handle, M.inputManager.buffer.handle)
 end
 
 
 function M.ask()
 
+    initBuffers()
+
     -- if question input exists 
-    if not inputManager:validateQuestion() then
+    if not M.inputManager:validateQuestion() then
         openChatTab()
         return
     end
 
-    local questionLines = inputManager:getQuestion()
-    local chat = chatManager:getChat()
+    local questionLines = M.inputManager:getQuestion()
+    local chat = M.chatManager:getChat()
 
     local handleQa = vim.schedule_wrap(function(qa)
-        chatManager:addChat(qa)
-        inputManager:reset()
+        M.chatManager:addChat(qa)
+        M.inputManager:reset()
         openChatTab()
     end)
 
