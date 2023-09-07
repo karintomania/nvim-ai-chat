@@ -20,7 +20,7 @@ function M.setup(customConfig)
 end
 
 local function openChatTab()
-    openTab.open(M.chatManager.buffer.handle, M.inputManager.buffer.handle)
+    openTab.open(M.chatManager.buffer.getHandle(), M.inputManager.buffer.getHandle())
 end
 
 function M.ask()

@@ -1,4 +1,4 @@
-require('nvim-ai-chat/display/Buffer')
+local buffer = require('nvim-ai-chat/display/Buffer')
 
 ChatManager = {
     questionPrefix = "[You]> ",
@@ -11,14 +11,14 @@ function ChatManager:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
-    o.buffer = Buffer:new({bufferName = self.buffName})
+    o.buffer = buffer(self.buffName)
     o:reset()
     return o
 end
 
 function ChatManager:getChat()
 
-    local str = self.buffer:read()
+    local str = self.buffer.read()
 
     if #str == 0 or table.concat(str) == "" then return {} end
 
@@ -75,8 +75,8 @@ function ChatManager:addChat(chat)
     local questionLines = self:formatLines(chat.question, self.questionPrefix)
     local answerLines = self:formatLines(chat.answer, self.answerPrefix)
 
-    self.buffer:append(questionLines)
-    self.buffer:append(answerLines)
+    self.buffer.append(questionLines)
+    self.buffer.append(answerLines)
 end
 
 function ChatManager:formatLines(rawLines, prefix)
@@ -94,4 +94,4 @@ function ChatManager:formatLines(rawLines, prefix)
     return lines
 end
 
-function ChatManager:reset() self.buffer:empty() end
+function ChatManager:reset() self.buffer.empty() end

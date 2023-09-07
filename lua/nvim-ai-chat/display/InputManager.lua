@@ -1,4 +1,4 @@
-require('nvim-ai-chat/display/Buffer')
+local buffer = require('nvim-ai-chat/display/Buffer')
 
 InputManager = {header = "-- type your question below --"}
 
@@ -9,22 +9,22 @@ function InputManager:new(o)
 
     local bufferName = "Chat_Input"
 
-    o.buffer = Buffer:new({bufferName = bufferName})
+    o.buffer = buffer(bufferName)
     o:reset()
     return o
 end
 
 function InputManager:getQuestion()
 
-    local lines = self.buffer:read()
+    local lines = self.buffer.read()
     -- remove header
     table.remove(lines, 1)
     return lines
 end
 
 function InputManager:reset()
-    self.buffer:empty()
-    self.buffer:append({self.header})
+    self.buffer.empty()
+    self.buffer.append({self.header})
 end
 
 function InputManager:validateQuestion()

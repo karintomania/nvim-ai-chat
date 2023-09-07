@@ -5,14 +5,14 @@ require('nvim-ai-chat/display/InputManager')
 local function test_new_sets_header()
     local im = InputManager:new()
     -- test the header is set
-    vim.fn.assert_equal(im.header, im.buffer:read()[1])
+    vim.fn.assert_equal(im.header, im.buffer.read()[1])
 end
 
 local function test_getQuestion()
     local im = InputManager:new()
     local testInput = {"test input"}
 
-    im.buffer:append(testInput)
+    im.buffer.append(testInput)
 
     local question = im:getQuestion()
     vim.fn.assert_equal(1, #question)
