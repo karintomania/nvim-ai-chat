@@ -1,5 +1,5 @@
-package.loaded['lua/nvim-ai-chat/strUtil'] = nil
-local strUtil = require('lua/nvim-ai-chat/strUtil')
+package.loaded['nvim-ai-chat/strUtil'] = nil
+local strUtil = require('nvim-ai-chat/strUtil')
 
 -- unescape() replaces \'
 local result = strUtil.unescape([[\'test\']])
@@ -43,4 +43,4 @@ local result = strUtil.escape([[{
 }]])
 vim.fn.assert_equal([[{\n\t\"\\033\"\n}]], result)
 
-require('lua/nvim-ai-chat/util').test('strUtilTest')
+require('nvim-ai-chat/util').test('strUtilTest')

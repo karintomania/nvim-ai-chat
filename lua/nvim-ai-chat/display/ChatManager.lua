@@ -1,4 +1,4 @@
-local Buffer = require('lua/nvim-ai-chat/display/Buffer')
+local Buffer = require('nvim-ai-chat/display/Buffer')
 
 local ChatManager = {
     questionPrefix = "[You]> ",

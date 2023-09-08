@@ -24,7 +24,7 @@ local callback = function(response)
     assert("1, 2, 3" == qa.answer[1],
            "1, 2, 3" .. "expected, but got " .. qa.answer[1])
 
-    require('lua/nvim-ai-chat/util').test('asyncCurlTest')
+    require('nvim-ai-chat/util').test('asyncCurlTest')
 end
 
 asyncCurl.call(options, vim.schedule_wrap(callback))

@@ -1,6 +1,6 @@
-package.loaded['lua/nvim-ai-chat/display/ChatManager'] = nil
-package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
-local ChatManager = require('lua/nvim-ai-chat/display/ChatManager')
+package.loaded['nvim-ai-chat/display/ChatManager'] = nil
+package.loaded['nvim-ai-chat/display/Buffer'] = nil
+local ChatManager = require('nvim-ai-chat/display/ChatManager')
 
 local function test_ConvertChatToTable_converts_chat_to_table()
     local cm = ChatManager:new()
@@ -67,4 +67,4 @@ test_ConvertChatToTable_converts_chat_to_table()
 test_ConvertChatToTable_returns_blank_table_if_chat_is_blank()
 test_addChat_and_getChat()
 
-require('lua/nvim-ai-chat/util').test('ChatManager')
+require('nvim-ai-chat/util').test('ChatManager')

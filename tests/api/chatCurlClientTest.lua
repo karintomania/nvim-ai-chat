@@ -62,4 +62,4 @@ end
 test_chatToOptions()
 test_getQA()
 
-require('lua/nvim-ai-chat/util').test('curlClientTest')
+require('nvim-ai-chat/util').test('curlClientTest')

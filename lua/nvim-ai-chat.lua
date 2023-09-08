@@ -1,8 +1,8 @@
 local M = {}
 
 -- TODO: create buffers when :Chat is called for the first time instead of plugin load
-local ChatManager = require('lua/nvim-ai-chat/display/ChatManager')
-local InputManager = require('lua/nvim-ai-chat/display/InputManager')
+local ChatManager = require('nvim-ai-chat/display/ChatManager')
+local InputManager = require('nvim-ai-chat/display/InputManager')
 
 _G.config = {token = '', model = "gpt-3.5-turbo", inputHeight = 10}
 

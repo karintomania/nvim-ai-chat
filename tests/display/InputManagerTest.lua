@@ -22,4 +22,4 @@ end
 test_new_sets_header()
 test_getQuestion()
 
-require('lua/nvim-ai-chat/util').test('InputManager')
+require('nvim-ai-chat/util').test('InputManager')

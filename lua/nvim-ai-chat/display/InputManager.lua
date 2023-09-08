@@ -1,4 +1,4 @@
-local Buffer = require('lua/nvim-ai-chat/display/Buffer')
+local Buffer = require('nvim-ai-chat/display/Buffer')
 
 local InputManager = {header = "-- type your question below --"}
 
