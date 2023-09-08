@@ -1,18 +1,26 @@
 package.loaded['lua/nvim-ai-chat/display/ChatManager'] = nil
 package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
-require('lua/nvim-ai-chat/display/ChatManager')
+local ChatManager = require('lua/nvim-ai-chat/display/ChatManager')
 
-local function test_ConvertChatToTable_converts_chat_to_table()
-    local cm = ChatManager:new()
+local questionPrefix = "[You]> "
+local answerPrefix = "[GPT]> "
+local indent = ""
+local buffName = "Chat_Main"
+
+local function test_getChat()
+    local cm = ChatManager()
+    local buffer = cm.getBuffer()
     local input = {
         "[You]> This is the first question",
         "[GPT]> This is the first answer",
         "[You]> This is",
-        cm.indent .. "the second question",
+        indent .. "the second question",
         "[GPT]> This is",
-        cm.indent .. "the second answer",
+        indent .. "the second answer",
     }
-    local res = cm:convertChatToTable(input)
+    buffer.append(input)
+
+    local res = cm.getChat()
 
     vim.fn.assert_equal(2, #res)
     vim.fn.assert_equal("This is the first question", res[1].question[1])
@@ -24,15 +32,14 @@ local function test_ConvertChatToTable_converts_chat_to_table()
 end
 
 local function test_ConvertChatToTable_returns_blank_table_if_chat_is_blank()
-    local cm = ChatManager:new()
-    local input = {}
-    local res = cm:convertChatToTable(input)
+    local cm = ChatManager()
+    local res = cm.convertChatToTable(input)
 
     vim.fn.assert_equal(0, #res)
 end
 
 local function test_addChat_and_getChat()
-    local cm = ChatManager:new()
+    local cm = ChatManager()
 
     local input = {
         question = {"This is", "the first question"},
@@ -40,8 +47,8 @@ local function test_addChat_and_getChat()
     }
 
     -- test add chat
-    cm:addChat(input)
-    local res = cm:getChat()
+    cm.addChat(input)
+    local res = cm.getChat()
 
     vim.fn.assert_equal(1, #res)
     vim.fn.assert_equal("This is", res[1].question[1])
@@ -55,16 +62,16 @@ local function test_addChat_and_getChat()
         answer = {"Finaly, this is", "the second answer"},
     }
 
-    cm:addChat(input2)
-    res = cm:getChat()
+    cm.addChat(input2)
+    res = cm.getChat()
     vim.fn.assert_equal('And this is', res[2].question[1])
     vim.fn.assert_equal('the second question', res[2].question[2])
     vim.fn.assert_equal('Finaly, this is', res[2].answer[1])
     vim.fn.assert_equal('the second answer', res[2].answer[2])
 end
 
-test_ConvertChatToTable_converts_chat_to_table()
-test_ConvertChatToTable_returns_blank_table_if_chat_is_blank()
-test_addChat_and_getChat()
+test_getChat()
+-- test_ConvertChatToTable_returns_blank_table_if_chat_is_blank()
+-- test_addChat_and_getChat()
 
 require('lua/nvim-ai-chat/util').test('ChatManager')

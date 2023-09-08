@@ -48,8 +48,8 @@ local function Buffer(bufferName)
         read = read,
         empty = empty,
         delete = delete,
-        getHandle = function () return handle end,
-        getBufferName = function () return bufferName end,
+        getHandle = function() return handle end,
+        getBufferName = function() return bufferName end,
     }
 end
 

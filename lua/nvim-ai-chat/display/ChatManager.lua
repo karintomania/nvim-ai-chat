@@ -1,97 +1,103 @@
-local buffer = require('nvim-ai-chat/display/Buffer')
+local Buffer = require('nvim-ai-chat/display/Buffer')
 
-ChatManager = {
-    questionPrefix = "[You]> ",
-    answerPrefix = "[GPT]> ",
-    indent = "",
-    buffName = "Chat_Main",
-}
+local function ChatManager()
 
-function ChatManager:new(o)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
-    o.buffer = buffer(self.buffName)
-    o:reset()
-    return o
-end
+    local questionPrefix = "[You]> "
+    local answerPrefix = "[GPT]> "
+    local indent = ""
+    local buffName = "Chat_Main"
+    local buffer = Buffer(buffName)
 
-function ChatManager:getChat()
+    local function convertChatToTable(chat)
+        local result = {}
+        local function addQA(question, answer)
+            table.insert(result, {question = question, answer = answer})
+        end
 
-    local str = self.buffer.read()
+        local currentQuestion = {}
+        local currentAnswer = {}
+        local isQuestion = true
 
-    if #str == 0 or table.concat(str) == "" then return {} end
-
-    local result = self:convertChatToTable(str)
-
-    return result
-end
-
-function ChatManager:convertChatToTable(chat)
-    local result = {}
-    local function addQA(question, answer)
-        table.insert(result, {question = question, answer = answer})
-    end
-
-    local currentQuestion = {}
-    local currentAnswer = {}
-    local isQuestion = true
-
-    -- TODO: rewrite in regex?
-    -- TODO: add if for blank chat
-    for i, line in ipairs(chat) do
-        if string.sub(line, 1, 7) == self.questionPrefix then
-            table.insert(currentQuestion, (line:gsub("%[You%]%> ", "")))
-            isQuestion = true
-        elseif string.sub(line, 1, 7) == self.answerPrefix then
-            isQuestion = false
-            table.insert(currentAnswer, (line:gsub("%[GPT%]%> ", "")))
-        else
-            if isQuestion then
-                table.insert(currentQuestion, (line:gsub(self.indent, "")))
+        -- TODO: rewrite in regex?
+        -- TODO: add if for blank chat
+        for i, line in ipairs(chat) do
+            if string.sub(line, 1, 7) == questionPrefix then
+                table.insert(currentQuestion, (line:gsub("%[You%]%> ", "")))
+                isQuestion = true
+            elseif string.sub(line, 1, 7) == answerPrefix then
+                isQuestion = false
+                table.insert(currentAnswer, (line:gsub("%[GPT%]%> ", "")))
             else
-                table.insert(currentAnswer, (line:gsub(self.indent, "")))
+                if isQuestion then
+                    table.insert(currentQuestion, (line:gsub(indent, "")))
+                else
+                    table.insert(currentAnswer, (line:gsub(indent, "")))
+                end
             end
+
+            if -- when next line includes question prefix or final line
+            (chat[i + 1] and string.sub(chat[i + 1], 1, 7) == questionPrefix) or
+                i == #chat then
+                addQA(currentQuestion, currentAnswer)
+                currentQuestion = {}
+                currentAnswer = {}
+            end
+
         end
 
-        if -- when next line includes question prefix or final line
-        (chat[i + 1] and string.sub(chat[i + 1], 1, 7) == self.questionPrefix) or
-            i == #chat then
-            addQA(currentQuestion, currentAnswer)
-            currentQuestion = {}
-            currentAnswer = {}
-        end
+        return result
 
     end
 
-    return result
+    local function getChat()
 
-end
+        local str = buffer.read()
 
--- add question and answer to the buffer
--- This funciton adds the prefix/indent to the lines
-function ChatManager:addChat(chat)
+        if #str == 0 or table.concat(str) == "" then return {} end
 
-    local questionLines = self:formatLines(chat.question, self.questionPrefix)
-    local answerLines = self:formatLines(chat.answer, self.answerPrefix)
+        local result = convertChatToTable(str)
 
-    self.buffer.append(questionLines)
-    self.buffer.append(answerLines)
-end
-
-function ChatManager:formatLines(rawLines, prefix)
-
-    local lines = {}
-    for i, rawLine in ipairs(rawLines) do
-        local line = ""
-        if i == 1 then
-            line = prefix .. rawLine
-        else
-            line = self.indent .. rawLine
-        end
-        table.insert(lines, line)
+        return result
     end
-    return lines
+
+    local function formatLines(rawLines, prefix)
+
+        local lines = {}
+        for i, rawLine in ipairs(rawLines) do
+            local line = ""
+            if i == 1 then
+                line = prefix .. rawLine
+            else
+                line = indent .. rawLine
+            end
+            table.insert(lines, line)
+        end
+        return lines
+    end
+
+    -- add question and answer to the buffer
+    -- This funciton adds the prefix/indent to the lines
+    local function addChat(chat)
+
+        local questionLines = formatLines(chat.question, questionPrefix)
+        local answerLines = formatLines(chat.answer, answerPrefix)
+
+        buffer.append(questionLines)
+        buffer.append(answerLines)
+    end
+
+    local function reset() buffer.empty() end
+
+    reset()
+
+    return {
+        getChat = getChat,
+        addChat = addChat,
+        convertChatToTable = convertChatToTable,
+        reset = reset,
+        getBuffer = function() return buffer end,
+    }
+
 end
 
-function ChatManager:reset() self.buffer.empty() end
+return ChatManager
