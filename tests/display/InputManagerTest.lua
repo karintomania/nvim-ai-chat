@@ -1,6 +1,6 @@
 package.loaded['nvim-ai-chat/display/InputManager'] = nil
 package.loaded['nvim-ai-chat/display/Buffer'] = nil
-require('nvim-ai-chat/display/InputManager')
+local InputManager = require('nvim-ai-chat/display/InputManager')
 
 local function test_new_sets_header()
     local im = InputManager:new()

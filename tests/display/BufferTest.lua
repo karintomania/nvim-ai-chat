@@ -1,5 +1,5 @@
 package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
-require('lua/nvim-ai-chat/display/Buffer')
+local Buffer = require('lua/nvim-ai-chat/display/Buffer')
 
 -- test New()
 local function testNew()

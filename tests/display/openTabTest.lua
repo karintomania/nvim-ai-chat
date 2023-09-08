@@ -1,8 +1,8 @@
 package.loaded['nvim-ai-chat/display/openTab'] = nil
 local openTab = require('nvim-ai-chat/display/openTab')
 
-package.loaded['nvim-ai-chat/display/Buffer'] = nil
-require('nvim-ai-chat/display/Buffer')
+package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
+local Buffer = require('lua/nvim-ai-chat/display/Buffer')
 
 _G.config = {inputHeight = 10}
 

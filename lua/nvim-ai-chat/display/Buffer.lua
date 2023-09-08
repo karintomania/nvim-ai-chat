@@ -1,4 +1,4 @@
-Buffer = {bufferName = ""}
+local Buffer = {bufferName = ""}
 
 function Buffer:new(o)
     o = o or {}
@@ -50,3 +50,5 @@ function Buffer:delete()
     vim.api.nvim_buf_delete(self.handle, {force = true})
     self.handle = -1
 end
+
+return Buffer

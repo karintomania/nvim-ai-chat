@@ -1,6 +1,6 @@
 package.loaded['lua/nvim-ai-chat/display/ChatManager'] = nil
 package.loaded['lua/nvim-ai-chat/display/Buffer'] = nil
-require('lua/nvim-ai-chat/display/ChatManager')
+local ChatManager = require('lua/nvim-ai-chat/display/ChatManager')
 
 local function test_ConvertChatToTable_converts_chat_to_table()
     local cm = ChatManager:new()

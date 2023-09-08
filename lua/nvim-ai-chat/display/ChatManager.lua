@@ -1,6 +1,6 @@
-require('nvim-ai-chat/display/Buffer')
+local Buffer = require('lua/nvim-ai-chat/display/Buffer')
 
-ChatManager = {
+local ChatManager = {
     questionPrefix = "[You]> ",
     answerPrefix = "[GPT]> ",
     indent = "",
@@ -95,3 +95,5 @@ function ChatManager:formatLines(rawLines, prefix)
 end
 
 function ChatManager:reset() self.buffer:empty() end
+
+return ChatManager

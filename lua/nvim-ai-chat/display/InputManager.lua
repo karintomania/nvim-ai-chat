@@ -1,6 +1,6 @@
-require('nvim-ai-chat/display/Buffer')
+local Buffer = require('lua/nvim-ai-chat/display/Buffer')
 
-InputManager = {header = "-- type your question below --"}
+local InputManager = {header = "-- type your question below --"}
 
 function InputManager:new(o)
     o = o or {}
@@ -44,3 +44,5 @@ function InputManager:validateQuestion()
 
     return true
 end
+
+return InputManager
