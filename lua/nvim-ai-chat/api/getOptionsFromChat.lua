@@ -1,4 +1,5 @@
 local strUtil = require('nvim-ai-chat/strUtil')
+local Config = require('nvim-ai-chat/Config')
 
 local function escapeQuestion(questionLines)
     local questionStr = table.concat(questionLines, "\n")
@@ -29,8 +30,8 @@ end
 
 local function getOptionsFromChat(chat, questionLines)
 
-    local token = _G.config.token
-    local model = _G.config.model
+    local token = Config.get("token")
+    local model = Config.get("model")
 
     local chatString = chatToStringArray(chat, questionLines)
 

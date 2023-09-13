@@ -4,7 +4,10 @@ local openTab = require('nvim-ai-chat/display/openTab')
 package.loaded['nvim-ai-chat/display/Buffer'] = nil
 local Buffer = require('nvim-ai-chat/display/Buffer')
 
-_G.config = {inputHeight = 10}
+package.loaded['nvim-ai-chat/api/Config'] = nil
+local Config = require('nvim-ai-chat/Config')
+
+Config.init({inputHeight = 10})
 
 local chatBuffer = Buffer:new({bufferName = "chat"})
 chatBuffer:append({"chat!"})

@@ -1,3 +1,7 @@
+package.loaded['nvim-ai-chat/api/Config'] = nil
+local Config = require('nvim-ai-chat/Config')
+Config.init({token = "test_token", model = "test_model"})
+
 package.loaded['nvim-ai-chat/api/getOptionsFromChat'] = nil
 local getOptions = require('nvim-ai-chat/api/getOptionsFromChat')
 
@@ -6,7 +10,6 @@ local function test_getOptionsFromChat()
     local chat = {{question = {"first question"}, answer = {"first answer"}}}
 
     local question = {"This is the", "second question"}
-    _G.config = {token = "test_token", model = "test_model"}
 
     local options = getOptions(chat, question)
 
