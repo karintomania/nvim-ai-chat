@@ -6,8 +6,8 @@ require('tests/feature/asyncCurlTest')
 ----------------
 -- API tests
 ----------------
-package.loaded['tests/api/chatCurlClientTest'] = nil
-require('tests/api/chatCurlClientTest')
+package.loaded['tests/api/getOptionsFromChatTest'] = nil
+require('tests/api/getOptionsFromChatTest')
 
 ----------------
 -- Display tests

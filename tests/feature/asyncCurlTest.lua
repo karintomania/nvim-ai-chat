@@ -1,6 +1,6 @@
 package.loaded['nvim-ai-chat/api/asyncCurl'] = nil
-package.loaded['nvim-ai-chat/api/chatCurlClient'] = nil
-local curl = require('nvim-ai-chat/api/chatCurlClient')
+package.loaded['nvim-ai-chat/api/getQAFromResponse'] = nil
+local getQAFromResponse = require('nvim-ai-chat/api/getQAFromResponse')
 local asyncCurl = require('nvim-ai-chat/api/asyncCurl')
 local secret = require('tests/secret')
 
@@ -16,7 +16,7 @@ local options = {
 local callback = function(response)
 
     local questionLines = {question}
-    local qa = curl.getQA(questionLines, response)
+    local qa = getQAFromResponse(questionLines, response)
 
     -- can't use vim.fn.assert_equal inside vim.schedule_wrap
     assert(question == qa.question[1],
