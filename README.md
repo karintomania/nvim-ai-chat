@@ -1,7 +1,7 @@
 # Nvim AI Chat
 Nvim AI chat is a NeoVim plugin to call OpenAI api from NeoVim.
 
-![preview of neovim-ai-chat](https://github.com/karintomania/nvim-ai-chat/assets/19652340/27634a64-75d1-40d6-b05e-561f37e5ecce)
+![preview of neovim-ai-chat](https://github.com/karintomania/nvim-ai-chat/assets/19652340/25e0482e-8b30-47a2-bfd2-33c45b24600f)
 
 Nvim AI chat is:
 - Intuitive to use. Same user experience as ChatGPT insdie NeoVim.
