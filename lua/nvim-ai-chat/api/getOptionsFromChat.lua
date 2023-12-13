@@ -14,18 +14,29 @@ end
 
 local function chatToStringArray(chat, questionLines)
 
+    local system = Config.get("system")
+
+    if system ~= nil then
+        system = string.format('{"role": "system", "content": "%s"},',
+                               strUtil.escape(system))
+    else
+        system = ""
+    end
+
     local res = ""
 
     for i, pair in ipairs(chat) do
         local q = processLines(pair.question)
         local a = processLines(pair.answer)
-        res = res .. '{"role": "user", "content": "' .. q .. '"},'
-        res = res .. '{"role": "assistant", "content": "' .. a .. '"},'
+        res = string.format('%s{"role": "user", "content": "%s"},', res, q)
+        res = string.format('%s{"role": "assistant", "content": "%s"},', res, a)
     end
 
     local question = escapeQuestion(questionLines)
-    res = res .. '{"role": "user", "content": "' .. question .. '"}'
-    return "[" .. res .. "]"
+    res = string.format('%s{"role": "user", "content": "%s"}', res, question)
+    res = string.format('%s%s', system, res)
+
+    return string.format("[%s]", res)
 end
 
 local function getOptionsFromChat(chat, questionLines)
